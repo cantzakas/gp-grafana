@@ -22,3 +22,7 @@ sudo yum localinstall xorg-x11-server-utils-7.7-20.el7.x86_64.rpm
 
 # Install grafana-server
 sudo yum localinstall grafana-6.4.3-1.x86_64.rpm
+
+systemctl daemon-reload
+#systemctl enable influxdb.service
+systemctl start grafana-server
