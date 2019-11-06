@@ -22,5 +22,3 @@ wget http://mirror.centos.org/centos/7/os/x86_64/Packages/xorg-x11-server-utils-
 
 # Get grafana-server
 wget https://dl.grafana.com/oss/release/grafana-6.4.3-1.x86_64.rpm
-
-#sudo yum localinstall grafana-6.4.3-1.x86_64.rpm

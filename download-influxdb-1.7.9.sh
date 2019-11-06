@@ -1,5 +1,3 @@
 #!/bin/bash
 
-wget https://dl.influxdata.com/telegraf/releases/telegraf-1.12.4-1.x86_64.rpm
-
-# sudo yum localinstall telegraf-1.12.4-1.x86_64.rpm
+wget https://dl.influxdata.com/telegraf/releases/influxdb-1.7.8.x86_64.rpm
