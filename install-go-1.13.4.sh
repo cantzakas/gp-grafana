@@ -7,9 +7,11 @@ sudo mv go /usr/local
 
 [ ! -d $HOME/GoProjects ] && sudo mkdir -p $HOME/GoProjects
 
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/GoProjects
-export PATH=$GOPATH/bin:$GOROOT/bin:$PATH
+echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
+echo 'export GOPATH=$HOME/GoProjects' >> ~/.bash_profile
+echo 'export PATH=$PATH:$GOPATH/bin:$GOROOT/bin' >> ~/.bash_profile
+
+source ~/.bash_profile
 
 # Verify installation
 go version
