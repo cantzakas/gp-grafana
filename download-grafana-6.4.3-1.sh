@@ -1,4 +1,4 @@
-# !/bin/bash
+#!/bin/bash
 
 # Get grafana-server depencencies
 # wget http://download-ib01.fedoraproject.org/pub/epel/7/x86_64/Packages/g/gsmartcontrol-1.1.3-1.el7.x86_64.rpm
