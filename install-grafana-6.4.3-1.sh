@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Install grafana-server depencencies
-sudo yum localinstall gsmartcontrol-1.1.3-1.el7.x86_64.rpm
+# sudo yum localinstall gsmartcontrol-1.1.3-1.el7.x86_64.rpm
 sudo yum localinstall libXmu-1.1.2-2.el7.x86_64.rpm
 sudo yum localinstall libXt-1.1.5-3.el7.x86_64.rpm
 sudo yum localinstall libXxf86misc-1.0.3-7.1.el7.x86_64.rpm
