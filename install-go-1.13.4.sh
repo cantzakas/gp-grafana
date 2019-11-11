@@ -7,6 +7,8 @@ sudo mv go /usr/local
 
 [ ! -d $HOME/GoProjects ] && sudo mkdir -p $HOME/GoProjects
 
+chmod -R -v 775 $HOME/GoProjects
+
 echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
 echo 'export GOPATH=$HOME/GoProjects' >> ~/.bash_profile
 echo 'export PATH=$PATH:$GOPATH/bin:$GOROOT/bin' >> ~/.bash_profile

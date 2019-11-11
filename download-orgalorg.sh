@@ -1,3 +1,3 @@
 #!/bin/bash
 
-go get github.com/reconquest/orgalorg
+go get -d -v github.com/reconquest/orgalorg
