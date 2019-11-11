@@ -2,12 +2,14 @@
 
 tar -xzf go1.13.4.linux-amd64.tar.gz
 
-if [ -d "/usr/local/go" ]; then sudo rm -rf /usr/local/go; fi
-sudo mv go /usr/local
+[ ! -d "/usr/local/go" ] && sudo mv go /usr/local
+
+sudo chmod -R 777 /usr/local/go/src
+sudo chmod -R 777 /usr/local/go/bin
 
 [ ! -d $HOME/GoProjects ] && sudo mkdir -p $HOME/GoProjects
 
-chmod -R -v 775 $HOME/GoProjects
+sudo chmod -R -v 777 $HOME/GoProjects
 
 echo 'export GOROOT=/usr/local/go' >> ~/.bash_profile
 echo 'export GOPATH=$HOME/GoProjects' >> ~/.bash_profile
