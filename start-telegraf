@@ -1,3 +1,6 @@
 #!/bin/bash
 
-orgalorg -o mdw -o sdw1 -o sdw2 -o sdw3 -o sdw4 -C sudo systemctl start telegraf
+source ~/.bash_profile
+
+orgalorg -o ./hostfile_allhosts -C sudo systemctl start telegraf
+
