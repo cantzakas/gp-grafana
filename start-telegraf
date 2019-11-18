@@ -1,6 +1,0 @@
-#!/bin/bash
-
-source ~/.bash_profile
-
-orgalorg -o ./hostfile_allhosts -C sudo systemctl start telegraf
-
