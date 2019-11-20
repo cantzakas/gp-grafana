@@ -15,6 +15,14 @@
       "type": "datasource",
       "pluginId": "influxdb",
       "pluginName": "InfluxDB"
+    },
+    {
+      "name": "DS_POSTGRESQL-ADMIN",
+      "label": "PostgreSQL-admin",
+      "description": "",
+      "type": "datasource",
+      "pluginId": "postgres",
+      "pluginName": "PostgreSQL"
     }
   ],
   "__requires": [
@@ -78,7 +86,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1574180556564,
+  "iteration": 1574247443087,
   "links": [],
   "panels": [
     {
@@ -283,7 +291,7 @@
       },
       "gridPos": {
         "h": 2,
-        "w": 4,
+        "w": 2,
         "x": 0,
         "y": 2
       },
@@ -388,7 +396,7 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 4,
+        "x": 2,
         "y": 2
       },
       "id": 8,
@@ -495,7 +503,7 @@
       "gridPos": {
         "h": 2,
         "w": 2,
-        "x": 6,
+        "x": 4,
         "y": 2
       },
       "id": 9,
@@ -570,6 +578,221 @@
       "timeFrom": null,
       "timeShift": null,
       "title": "GPCC Version",
+      "type": "singlestat",
+      "valueFontSize": "50%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "${DS_POSTGRESQL-ADMIN}",
+      "decimals": 2,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 6,
+        "y": 2
+      },
+      "id": 35,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT SUBSTRING(madlib.version() FROM 'MADlib version: (\\d*\\.\\d*)');",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_user"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history_1_prt_2",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "MADlib Version",
+      "type": "singlestat",
+      "valueFontSize": "50%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "null"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "colorBackground": false,
+      "colorValue": false,
+      "colors": [
+        "#299c46",
+        "rgba(237, 129, 40, 0.89)",
+        "#d44a3a"
+      ],
+      "datasource": "${DS_POSTGRESQL-ADMIN}",
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 2,
+        "x": 8,
+        "y": 2
+      },
+      "id": 36,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT SUBSTRING(postgis_version() FROM '(\\d*\\.\\d*)');",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_user"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history_1_prt_2",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "thresholds": "",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "PostGIS Version",
       "type": "singlestat",
       "valueFontSize": "50%",
       "valueMaps": [
@@ -1081,22 +1304,22 @@
       "dashes": false,
       "datasource": "${DS_POSTGRESQL}",
       "decimals": 0,
-      "fill": 5,
+      "fill": 2,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 4,
         "w": 12,
         "x": 12,
         "y": 4
       },
-      "id": 15,
+      "id": 30,
       "legend": {
         "alignAsTable": true,
         "avg": false,
         "current": true,
-        "max": false,
+        "max": true,
         "min": false,
-        "rightSide": false,
+        "rightSide": true,
         "show": true,
         "total": false,
         "values": true
@@ -1114,30 +1337,35 @@
       "seriesOverrides": [
         {
           "alias": "queries_running",
-          "color": "#73BF69",
-          "dashes": false
+          "color": "#73BF69"
         },
         {
           "alias": "queries_queued",
-          "color": "#F2CC0C",
-          "dashes": false
+          "color": "#F2CC0C"
         },
         {
           "alias": "queries_blocked",
-          "color": "#E02F44",
-          "dashes": false
+          "color": "#E02F44"
         }
       ],
       "spaceLength": 10,
       "stack": false,
-      "steppedLine": true,
+      "steppedLine": false,
       "targets": [
         {
           "format": "time_series",
-          "group": [],
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  ctime AS \"time\",\n  queries_running,\n  queries_queued,\n  queries_blocked\nFROM database_history\nWHERE\n  $__timeFilter(ctime)\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  max(queries_running) AS \"Running\",\n  max(queries_queued) AS \"Queued\",\n  max(queries_blocked) AS \"Blocked\"\nFROM database_history\nWHERE\n  $__timeFilter(ctime)\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -1146,6 +1374,18 @@
                   "queries_running"
                 ],
                 "type": "column"
+              },
+              {
+                "params": [
+                  "max"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Running"
+                ],
+                "type": "alias"
               }
             ],
             [
@@ -1154,6 +1394,18 @@
                   "queries_queued"
                 ],
                 "type": "column"
+              },
+              {
+                "params": [
+                  "max"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Queued"
+                ],
+                "type": "alias"
               }
             ],
             [
@@ -1162,6 +1414,18 @@
                   "queries_blocked"
                 ],
                 "type": "column"
+              },
+              {
+                "params": [
+                  "max"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Blocked"
+                ],
+                "type": "alias"
               }
             ]
           ],
@@ -1201,7 +1465,7 @@
           "format": "short",
           "label": "",
           "logBase": 1,
-          "max": "10",
+          "max": null,
           "min": "0",
           "show": true
         },
@@ -1816,21 +2080,22 @@
       "dashes": false,
       "datasource": "${DS_POSTGRESQL}",
       "decimals": 2,
-      "fill": 5,
+      "fill": 0,
       "fillGradient": 0,
       "gridPos": {
-        "h": 7,
+        "h": 4,
         "w": 12,
         "x": 12,
-        "y": 11
+        "y": 8
       },
-      "id": 17,
+      "id": 32,
       "legend": {
         "alignAsTable": true,
         "avg": false,
         "current": true,
-        "max": false,
+        "max": true,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
         "values": true
@@ -1847,47 +2112,96 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "cpu_sys",
-          "color": "#FF780A",
-          "dashes": false
+          "alias": "System",
+          "color": "#8F3BB8"
         },
         {
-          "alias": "cpu_user",
-          "color": "rgb(84, 59, 238)",
-          "dashes": false
+          "alias": "User",
+          "color": "#FF9830"
         },
         {
-          "alias": "cpu_total",
-          "bars": false,
+          "alias": "Total",
           "lines": false
         }
       ],
       "spaceLength": 10,
       "stack": false,
-      "steppedLine": true,
+      "steppedLine": false,
       "targets": [
         {
           "format": "time_series",
-          "group": [],
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
           "metricColumn": "none",
-          "rawQuery": true,
-          "rawSql": "SELECT\n  ctime AS \"time\",\n  cpu_sys,\n  cpu_user,\n  cpu_sys + cpu_user AS \"cpu_total\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime)\nORDER BY 1",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  avg(cpu_user) AS \"User\",\n  avg(cpu_sys) AS \"System\",\n  avg(cpu_user+cpu_sys) AS \"Total\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime)\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
-            [
-              {
-                "params": [
-                  "cpu_sys"
-                ],
-                "type": "column"
-              }
-            ],
             [
               {
                 "params": [
                   "cpu_user"
                 ],
                 "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "User"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "cpu_sys"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "System"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "cpu_user+cpu_sys"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Total"
+                ],
+                "type": "alias"
               }
             ]
           ],
@@ -1952,28 +2266,29 @@
       "dashes": false,
       "datasource": "${DS_POSTGRESQL}",
       "decimals": 2,
-      "fill": 5,
-      "fillGradient": 0,
+      "fill": 0,
+      "fillGradient": 1,
       "gridPos": {
-        "h": 7,
+        "h": 4,
         "w": 12,
         "x": 12,
-        "y": 18
+        "y": 12
       },
-      "id": 18,
+      "id": 34,
       "legend": {
         "alignAsTable": true,
         "avg": false,
         "current": true,
-        "max": false,
+        "max": true,
         "min": false,
+        "rightSide": true,
         "show": true,
         "total": false,
         "values": true
       },
       "lines": true,
       "linewidth": 1,
-      "nullPointMode": "null",
+      "nullPointMode": "connected",
       "options": {
         "dataLinks": []
       },
@@ -1983,33 +2298,46 @@
       "renderer": "flot",
       "seriesOverrides": [
         {
-          "alias": "mem_actual_used_perc",
-          "color": "#5794F2",
-          "dashes": false
+          "alias": "In use",
+          "color": "#FF9830"
         }
       ],
       "spaceLength": 10,
       "stack": false,
-      "steppedLine": true,
+      "steppedLine": false,
       "targets": [
         {
           "format": "time_series",
-          "group": [],
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
           "metricColumn": "none",
           "rawQuery": false,
-          "rawSql": "SELECT\n  ctime AS \"time\",\n  ROUND(100 * mem_actual_used::DECIMAL / (mem_actual_used + mem_actual_free), 2) AS \"mem_actual_used_perc\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime)\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  avg(ROUND(100.00 * mem_actual_used/mem_total, 2)) AS \"In use\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime)\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
               {
                 "params": [
-                  "ROUND(100 * mem_actual_used::DECIMAL / (mem_actual_used + mem_actual_free), 2)"
+                  "ROUND(100.00 * mem_actual_used/mem_total, 2)"
                 ],
                 "type": "column"
               },
               {
                 "params": [
-                  "mem_actual_used_perc"
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "In use"
                 ],
                 "type": "alias"
               }
@@ -2143,5 +2471,5 @@
   "timezone": "",
   "title": "Pivotal Greenplum Command Center Dashboard",
   "uid": "chhyRLJWk",
-  "version": 3
+  "version": 10
 }
