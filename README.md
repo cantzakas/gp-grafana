@@ -40,7 +40,7 @@ CREATE EXTERNAL WEB TABLE gpcc_version (
 EXECUTE 'source /usr/local/greenplum-cc-web/gpcc_path.sh; /usr/local/greenplum-cc-web/bin/gpcc --version | awk ''{print $7}''' ON MASTER 
 FORMAT 'TEXT';
 ```
-17. Import the `gpcc/gpcc_cluster_metrics.json`, `gpcc/gpcc_dashboard.json`, and `gpcc/gpcc_host_metrics_*.json` files as new dashboards on Grafana. The `gpcc/*` dashboards require Grafana, Greenplum Database and Greenplum Database Command Center services to be valid and working, to run properly.
+17. Import the `gpcc/gpcc_cluster_metrics.json`, `gpcc/gpcc_dashboard.json`, and `gpcc/gpcc_host_metrics_*.json` files as new dashboards on Grafana. The `gpcc/*` dashboard components require Grafana, Greenplum Database and Greenplum Database Command Center services to be valid and working in order to run properly but the `Uptime (Master)` component, which additionally requires, the InfluxDB and Telegraf services.
 18. (Optional) Import the `gp-cluster/gpcluster-dashboard.json`, and `host-dashboard_rev2/host-dashboard_rev2.json` file as new dashboards on Grafana. Those two dashboards, require Grafana, Greenplum Database, Greenplum Database Command Center and also InfluxDB, Telegraf services to be valid and working, to run properly.
 
 ### Screenshots
@@ -51,9 +51,9 @@ FORMAT 'TEXT';
 - `host-dashboard_rev2/host-dashboard_rev2.json` (Segment View)
 ![Image of gp-cluster/gpcluster-dashboard.json](https://github.com/cantzakas/gp-grafana/blob/master/host-dashboard_rev2/host-dashboard_rev2-segment.jpg)
 - `gpcc/gpcc_cluster_metrics.json`
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of gpcc/gpcc_cluster_metrics.json](https://github.com/cantzakas/gp-grafana/blob/master/gpcc/gpcc_cluster_metrics.jpg)
 - `gpcc/gpcc_dashboard.json`
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+![Image of gpcc/gpcc_dashboard.json](https://github.com/cantzakas/gp-grafana/blob/master/gpcc/gpcc_dashboard.jpg)
 - `gpcc/gpcc_host_metrics_*.json`
 ![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 
