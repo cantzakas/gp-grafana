@@ -16,7 +16,7 @@
 5. (Optional) Run `./download-orgalorg.sh` file, followed by `./install-orgalorg.sh` file.
 6. (Optional) Run `./download-influxdb-1.7.9.sh` file, followed by `./install-influxdb-1.7.9.sh` file.
 7. (Optional) Run `./download-telegraf-1.12.4-1.sh` file, followed by `./install-telegraf-1.12.4-1.sh` file.
-8. Make sure ports 3000, 8086 are open and allow connections, on the Greenplum master instance for Grafana GUI and InfluxDB to run properly.
+8. Make sure ports 3000, 8086 (Optional) are open and allow connections, on the Greenplum master instance for Grafana GUI and InfluxDB respectively, to run properly.
 9. Run `./start-grafana.sh` to start the Grafana Server and GUI on master host.
 10. (Optional) Run `./start-influx.sh` to start the InfluxDB on master host. 
 11. (Optional) Run `./start-telegraf.sh` to start the Telegrag agent on all hosts.
@@ -42,3 +42,18 @@ FORMAT 'TEXT';
 ```
 17. Import the `gpcc/gpcc_cluster_metrics.json`, `gpcc/gpcc_dashboard.json`, and `gpcc/gpcc_host_metrics_*.json` files as new dashboards on Grafana. The `gpcc/*` dashboards require Grafana, Greenplum Database and Greenplum Database Command Center services to be valid and working, to run properly.
 18. (Optional) Import the `gp-cluster/gpcluster-dashboard.json`, and `host-dashboard_rev2/host-dashboard_rev2.json` file as new dashboards on Grafana. Those two dashboards, require Grafana, Greenplum Database, Greenplum Database Command Center and also InfluxDB, Telegraf services to be valid and working, to run properly.
+
+### Screenshots
+- `gp-cluster/gpcluster-dashboard.json` 
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+- `host-dashboard_rev2/host-dashboard_rev2.json` (Master View)
+![Image of gp-cluster/gpcluster-dashboard.json](https://github.com/cantzakas/gp-grafana/blob/master/host-dashboard_rev2/host-dashboard_rev2-master.jpg)
+- `host-dashboard_rev2/host-dashboard_rev2.json` (Segment View)
+![Image of gp-cluster/gpcluster-dashboard.json](https://github.com/cantzakas/gp-grafana/blob/master/host-dashboard_rev2/host-dashboard_rev2-segment.jpg)
+- `gpcc/gpcc_cluster_metrics.json`
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+- `gpcc/gpcc_dashboard.json`
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+- `gpcc/gpcc_host_metrics_*.json`
+![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+
