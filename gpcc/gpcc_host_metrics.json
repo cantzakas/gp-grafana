@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1574348357357,
+  "iteration": 1574348357360,
   "links": [],
   "panels": [
     {
@@ -737,7 +737,7 @@
           "defaults": {
             "decimals": 2,
             "mappings": [],
-            "max": 1000000,
+            "max": 1024000000,
             "min": 0,
             "thresholds": [
               {
@@ -746,15 +746,15 @@
               },
               {
                 "color": "yellow",
-                "value": 700000
+                "value": 717000000
               },
               {
                 "color": "orange",
-                "value": 800000
+                "value": 819000000
               },
               {
                 "color": "red",
-                "value": 900000
+                "value": 922000000
               }
             ],
             "title": "",
@@ -815,7 +815,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Disk IO (Read)",
+      "title": "Disk I/O (Read)",
       "type": "bargauge"
     },
     {
@@ -836,7 +836,7 @@
           "defaults": {
             "decimals": 2,
             "mappings": [],
-            "max": 1000000,
+            "max": 1024000000,
             "min": 0,
             "thresholds": [
               {
@@ -845,15 +845,15 @@
               },
               {
                 "color": "yellow",
-                "value": 700000
+                "value": 717000000
               },
               {
                 "color": "orange",
-                "value": 800000
+                "value": 819000000
               },
               {
                 "color": "red",
-                "value": 900000
+                "value": 922000000
               }
             ],
             "title": "",
@@ -904,7 +904,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Disk Skew",
+      "title": "Disk I/O (Write)",
       "type": "bargauge"
     },
     {
@@ -925,7 +925,7 @@
           "defaults": {
             "decimals": 2,
             "mappings": [],
-            "max": 100000000,
+            "max": 1024000000,
             "min": 0,
             "thresholds": [
               {
@@ -934,15 +934,15 @@
               },
               {
                 "color": "yellow",
-                "value": 70000000
+                "value": 717000000
               },
               {
                 "color": "orange",
-                "value": 80000000
+                "value": 819000000
               },
               {
                 "color": "red",
-                "value": 90000000
+                "value": 922000000
               }
             ],
             "title": "",
@@ -1024,7 +1024,7 @@
           "defaults": {
             "decimals": 2,
             "mappings": [],
-            "max": 100000000,
+            "max": 1024000000,
             "min": 0,
             "thresholds": [
               {
@@ -1033,15 +1033,15 @@
               },
               {
                 "color": "yellow",
-                "value": 70000000
+                "value": 717000000
               },
               {
                 "color": "orange",
-                "value": 80000000
+                "value": 819000000
               },
               {
                 "color": "red",
-                "value": 90000000
+                "value": 922000000
               }
             ],
             "title": "",
@@ -1138,5 +1138,5 @@
   "timezone": "",
   "title": "Host Metrics",
   "uid": "RsNBKGbW2",
-  "version": 6
+  "version": 8
 }
