@@ -44,8 +44,6 @@ FORMAT 'TEXT';
 18. (Optional) Import the `gp-cluster/gpcluster-dashboard.json`, and `host-dashboard_rev2/host-dashboard_rev2.json` file as new dashboards on Grafana. Those two dashboards, require Grafana, Greenplum Database, Greenplum Database Command Center and also InfluxDB, Telegraf services to be valid and working, to run properly.
 
 ### Screenshots
-- `gp-cluster/gpcluster-dashboard.json` 
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
 - `host-dashboard_rev2/host-dashboard_rev2.json` (Master View)
 ![Image of gp-cluster/gpcluster-dashboard.json](https://github.com/cantzakas/gp-grafana/blob/master/host-dashboard_rev2/host-dashboard_rev2-master.jpg)
 - `host-dashboard_rev2/host-dashboard_rev2.json` (Segment View)
@@ -54,6 +52,6 @@ FORMAT 'TEXT';
 ![Image of gpcc/gpcc_cluster_metrics.json](https://github.com/cantzakas/gp-grafana/blob/master/gpcc/gpcc_cluster_metrics.jpg)
 - `gpcc/gpcc_dashboard.json`
 ![Image of gpcc/gpcc_dashboard.json](https://github.com/cantzakas/gp-grafana/blob/master/gpcc/gpcc_dashboard.jpg)
-- `gpcc/gpcc_host_metrics_*.json`
-![Image of Yaktocat](https://octodex.github.com/images/yaktocat.png)
+- `gpcc/gpcc_host_metrics.json`
+![Image of gpcc/gpcc_host_metrics.json](https://github.com/cantzakas/gp-grafana/blob/master/gpcc/gpcc_host_metrics.jpg)
 
