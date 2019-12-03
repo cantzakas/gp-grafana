@@ -29,16 +29,37 @@
 ALTER DATABASE gpperfmon SET search_path TO public,gpmetrics;
 ```
 ```sql
+DROP EXTERNAL WEB TABLE gpstate;
 CREATE EXTERNAL WEB TABLE gpstate ( 
     output TEXT)
 EXECUTE '/usr/local/greenplum-db/bin/gpstate -e' ON MASTER 
 FORMAT 'TEXT';
 ```
 ``` sql
+DROP EXTERNAL WEB TABLE gpcc_version;
 CREATE EXTERNAL WEB TABLE gpcc_version ( 
     version TEXT)
 EXECUTE 'source /usr/local/greenplum-cc-web/gpcc_path.sh; /usr/local/greenplum-cc-web/bin/gpcc --version | awk ''{print $7}''' ON MASTER 
 FORMAT 'TEXT';
+```
+``` sql
+DROP EXTERNAL WEB TABLE gpstate_replication_mode;
+CREATE EXTERNAL WEB TABLE gpstate_replication_mode ( 
+    Mirror TEXT,
+    Datadir TEXT, 
+    Port INTEGER, 
+    Status TEXT, 
+    DataStatus TEXT)
+EXECUTE '/usr/local/greenplum-db/bin/gpstate -m | grep -E -- ''Synchronized|Resynchronizing|Change Tracking'' | awk {''print $3 "|" $4 "|" $5 "|" $6 "|" $7''}' ON MASTER 
+FORMAT 'TEXT' (DELIMITER '|');
+```
+``` sql
+DROP EXTERNAL WEB TABLE gpstate_summary;
+CREATE EXTERNAL WEB TABLE gpstate_summary (
+    descr TEXT,
+    value TEXT)
+EXECUTE 'gpstate | grep -E -- ''^.*\[INFO\]:-\s*(.*)=.*$'' | awk -F ''[[:space:]][[:space:]]+'' ''{print $2, $3}'' | awk -F ''='' ''{print $1"|"$2}''' ON MASTER
+FORMAT 'TEXT' (DELIMITER '|');
 ```
 17. Import the `gpcc/gpcc_cluster_metrics.json`, `gpcc/gpcc_dashboard.json`, and `gpcc/gpcc_host_metrics_*.json` files as new dashboards on Grafana. The `gpcc/*` dashboard components require Grafana, Greenplum Database and Greenplum Database Command Center services to be valid and working in order to run properly but the `Uptime (Master)` component, which additionally requires, the InfluxDB and Telegraf services.
 18. (Optional) Import the `gp-cluster/gpcluster-dashboard.json`, and `host-dashboard_rev2/host-dashboard_rev2.json` file as new dashboards on Grafana. Those two dashboards, require Grafana, Greenplum Database, Greenplum Database Command Center and also InfluxDB, Telegraf services to be valid and working, to run properly.
@@ -54,4 +75,5 @@ FORMAT 'TEXT';
 ![Image of gpcc/gpcc_dashboard.json](https://github.com/cantzakas/gp-grafana/blob/master/gpcc/gpcc_dashboard.jpg)
 - `gpcc/gpcc_host_metrics.json`
 ![Image of gpcc/gpcc_host_metrics.json](https://github.com/cantzakas/gp-grafana/blob/master/gpcc/gpcc_host_metrics.jpg)
-
+- `gpcc/gpcc_segment_status.json`
+![Image of gpcc/gpcc_host_metrics.json](https://github.com/cantzakas/gp-grafana/blob/master/gpcc/gpcc_segment_status.jpg)
