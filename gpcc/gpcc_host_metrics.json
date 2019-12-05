@@ -46,7 +46,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1574356677359,
+  "iteration": 1575558694487,
   "links": [],
   "panels": [
     {
@@ -372,7 +372,7 @@
               }
             ],
             "title": "",
-            "unit": "decbytes"
+            "unit": "bytes"
           },
           "override": {},
           "values": false
@@ -659,7 +659,7 @@
               }
             ],
             "title": "",
-            "unit": "decbytes"
+            "unit": "bytes"
           },
           "override": {},
           "values": false
@@ -1138,5 +1138,5 @@
   "timezone": "",
   "title": "Host Metrics",
   "uid": "RsNBKGbW2",
-  "version": 9
+  "version": 2
 }
