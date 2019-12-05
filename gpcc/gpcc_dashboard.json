@@ -9,14 +9,6 @@
       "pluginName": "PostgreSQL"
     },
     {
-      "name": "DS_INFLUXDB",
-      "label": "InfluxDB",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "influxdb",
-      "pluginName": "InfluxDB"
-    },
-    {
       "name": "DS_POSTGRESQL-ADMIN",
       "label": "PostgreSQL-admin",
       "description": "",
@@ -43,12 +35,6 @@
       "id": "graph",
       "name": "Graph",
       "version": ""
-    },
-    {
-      "type": "datasource",
-      "id": "influxdb",
-      "name": "InfluxDB",
-      "version": "1.0.0"
     },
     {
       "type": "datasource",
@@ -86,7 +72,7 @@
   "gnetId": null,
   "graphTooltip": 0,
   "id": null,
-  "iteration": 1574247443087,
+  "iteration": 1575555251054,
   "links": [],
   "panels": [
     {
@@ -202,7 +188,7 @@
       "datasource": "${DS_POSTGRESQL}",
       "fontSize": "100%",
       "gridPos": {
-        "h": 4,
+        "h": 5,
         "w": 12,
         "x": 12,
         "y": 0
@@ -279,9 +265,9 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "${DS_INFLUXDB}",
+      "datasource": "${DS_POSTGRESQL-ADMIN}",
       "decimals": 0,
-      "format": "dthms",
+      "format": "none",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -335,27 +321,30 @@
       "tableColumn": "",
       "targets": [
         {
-          "groupBy": [],
-          "measurement": "system",
-          "orderByTime": "ASC",
-          "policy": "default",
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT info FROM system_uptime;",
           "refId": "A",
-          "resultFormat": "table",
           "select": [
             [
               {
                 "params": [
-                  "uptime"
+                  "planrows"
                 ],
-                "type": "field"
+                "type": "column"
               }
             ]
           ],
-          "tags": [
+          "table": "_gpcc_plannode_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
             {
-              "key": "host",
-              "operator": "=",
-              "value": "mdw"
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
             }
           ]
         }
@@ -365,7 +354,7 @@
       "timeShift": null,
       "title": "Uptime (master)",
       "type": "singlestat",
-      "valueFontSize": "50%",
+      "valueFontSize": "30%",
       "valueMaps": [
         {
           "op": "=",
@@ -472,7 +461,7 @@
       "timeShift": null,
       "title": "GPDB Version",
       "type": "singlestat",
-      "valueFontSize": "50%",
+      "valueFontSize": "30%",
       "valueMaps": [
         {
           "op": "=",
@@ -579,7 +568,7 @@
       "timeShift": null,
       "title": "GPCC Version",
       "type": "singlestat",
-      "valueFontSize": "50%",
+      "valueFontSize": "30%",
       "valueMaps": [
         {
           "op": "=",
@@ -658,7 +647,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT SUBSTRING(madlib.version() FROM 'MADlib version: (\\d*\\.\\d*)');",
+          "rawSql": "SELECT version\nFROM (\n    SELECT version, COUNT(*) FROM madlib_version GROUP BY 1\n    UNION\n    SELECT 'Not Installed', 0) foo\nORDER BY count DESC\nFETCH FIRST 1 ROWS ONLY;",
           "refId": "A",
           "select": [
             [
@@ -687,7 +676,7 @@
       "timeShift": null,
       "title": "MADlib Version",
       "type": "singlestat",
-      "valueFontSize": "50%",
+      "valueFontSize": "30%",
       "valueMaps": [
         {
           "op": "=",
@@ -765,7 +754,7 @@
           "group": [],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT SUBSTRING(postgis_version() FROM '(\\d*\\.\\d*)');",
+          "rawSql": "SELECT version\nFROM (\n    SELECT version, COUNT(*) FROM postgis_version GROUP BY 1\n    UNION\n    SELECT 'Not Installed', 0) foo\nORDER BY count DESC\nFETCH FIRST 1 ROWS ONLY;",
           "refId": "A",
           "select": [
             [
@@ -794,7 +783,7 @@
       "timeShift": null,
       "title": "PostGIS Version",
       "type": "singlestat",
-      "valueFontSize": "50%",
+      "valueFontSize": "30%",
       "valueMaps": [
         {
           "op": "=",
@@ -1006,7 +995,7 @@
       ],
       "datasource": "${DS_POSTGRESQL}",
       "decimals": 2,
-      "format": "decbytes",
+      "format": "bytes",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -1199,7 +1188,7 @@
       ],
       "datasource": "${DS_POSTGRESQL}",
       "decimals": 2,
-      "format": "decbytes",
+      "format": "bytes",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -1310,7 +1299,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 4
+        "y": 5
       },
       "id": 30,
       "legend": {
@@ -1578,7 +1567,7 @@
       ],
       "datasource": "${DS_POSTGRESQL}",
       "decimals": 2,
-      "format": "decbytes",
+      "format": "bytes",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -1771,7 +1760,7 @@
       ],
       "datasource": "${DS_POSTGRESQL}",
       "decimals": 2,
-      "format": "decbytes",
+      "format": "bytes",
       "gauge": {
         "maxValue": 100,
         "minValue": 0,
@@ -2086,7 +2075,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 8
+        "y": 9
       },
       "id": 32,
       "legend": {
@@ -2272,7 +2261,7 @@
         "h": 4,
         "w": 12,
         "x": 12,
-        "y": 12
+        "y": 13
       },
       "id": 34,
       "legend": {
@@ -2471,5 +2460,5 @@
   "timezone": "",
   "title": "Pivotal Greenplum Command Center Dashboard",
   "uid": "chhyRLJWk",
-  "version": 10
+  "version": 6
 }
