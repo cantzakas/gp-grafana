@@ -154,7 +154,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Used Storage",
+      "title": "Used Storage by Host Type",
       "type": "bargauge"
     },
     {
@@ -281,7 +281,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "GP Master Storage Usage History",
+      "title": "GP Masters, Storage Usage History",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -424,7 +424,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Storage Available",
+      "title": "Free Storage % by Host Type",
       "type": "bargauge"
     },
     {
@@ -551,7 +551,7 @@
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "GP Segments Storage Usage History",
+      "title": "GP Segments, Storage Usage History",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -694,7 +694,7 @@
       ],
       "timeFrom": null,
       "timeShift": null,
-      "title": "Storage Available",
+      "title": "Free Storage by Host Type",
       "type": "bargauge"
     },
     {
@@ -805,7 +805,7 @@
       ],
       "timeFrom": "1h",
       "timeShift": "1h",
-      "title": "GP Segments,  Used Storage % per Hostname, Data Directory",
+      "title": "GP Segments,  Used Storage % by Hostname, Data Directory",
       "type": "bargauge"
     },
     {
@@ -914,7 +914,7 @@
       ],
       "timeFrom": "1h",
       "timeShift": "1h",
-      "title": "GP Segments, Free Storage % per Hostname, Data Directory",
+      "title": "GP Segments, Free Storage % by Hostname, Data Directory",
       "type": "bargauge"
     },
     {
@@ -997,7 +997,7 @@
       ],
       "timeFrom": "1h",
       "timeShift": "1h",
-      "title": "GP Segments, Free Storage per Hostname, Data Directory",
+      "title": "GP Segments, Free Storage by Hostname, Data Directory",
       "type": "bargauge"
     },
     {
@@ -1086,7 +1086,7 @@
       ],
       "timeFrom": "1h",
       "timeShift": "1h",
-      "title": "GP Segments, Storage Total per Hostname, Data Directory",
+      "title": "GP Segments, Storage Total by Hostname, Data Directory",
       "type": "bargauge"
     }
   ],
@@ -1108,5 +1108,5 @@
   "timezone": "",
   "title": "Storage Status",
   "uid": "UtJcuN-Zz",
-  "version": 4
+  "version": 6
 }
