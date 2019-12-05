@@ -1290,11 +1290,11 @@
   },
   "timepicker": {
     "refresh_intervals": [
-      "30s"
+      "1m"
     ]
   },
   "timezone": "",
-  "title": "Pivotal Greenplum Command Center Cluster Metrics",
+  "title": "Cluster Metrics",
   "uid": "JGYzZ7bZk",
-  "version": 8
+  "version": 3
 }
