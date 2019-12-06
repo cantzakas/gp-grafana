@@ -96,7 +96,7 @@ CREATE EXTERNAL WEB TABLE system_uptime (
 EXECUTE 'uptime -p | awk ''{print $2, $3, $4, $5}''' ON MASTER
 FORMAT 'TEXT';
 ```
-17. Import the `gpcc/gpcc_dashboard.json`, and `gpcc/gpcc_*.json` files as new dashboards on Grafana. The `gpcc/*` dashboard components require Grafana, Greenplum Database and Greenplum Database Command Center services to be valid and working in order to run properly but the `Uptime (Master)` component, which additionally requires, the InfluxDB and Telegraf services.
+17. Import the `gpcc/gpcc_dashboard.json`, and `gpcc/gpcc_*.json` files as new dashboards on Grafana. The `gpcc/*` dashboard components require Grafana, Greenplum Database and Greenplum Database Command Center services to be valid and working in order to run properly.
 18. (Optional) Import the `gp-cluster/gpcluster-dashboard.json`, and `host-dashboard_rev2/host-dashboard_rev2.json` file as new dashboards on Grafana. Those two dashboards, require Grafana, Greenplum Database, Greenplum Database Command Center and also InfluxDB, Telegraf services to be valid and working, to run properly.
 
 ### Screenshots
