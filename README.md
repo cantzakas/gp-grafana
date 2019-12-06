@@ -30,7 +30,8 @@ ALTER DATABASE gpperfmon SET search_path TO public,gpmetrics;
 ```
 ```sql
 DROP EXTERNAL WEB TABLE IF EXISTS gpstate;
-
+```
+```sql
 CREATE EXTERNAL WEB TABLE gpstate ( 
     output TEXT)
 EXECUTE '/usr/local/greenplum-db/bin/gpstate -e' ON MASTER 
@@ -38,7 +39,8 @@ FORMAT 'TEXT';
 ```
 ``` sql
 DROP EXTERNAL WEB TABLE IF EXISTS gpcc_version;
-
+```
+```sql
 CREATE EXTERNAL WEB TABLE gpcc_version ( 
     version TEXT)
 EXECUTE 'source /usr/local/greenplum-cc-web/gpcc_path.sh; /usr/local/greenplum-cc-web/bin/gpcc --version | awk ''{print $7}''' ON MASTER 
@@ -46,7 +48,8 @@ FORMAT 'TEXT';
 ```
 ``` sql
 DROP EXTERNAL WEB TABLE IF EXISTS gpstate_replication_mode;
-
+```
+```sql
 CREATE EXTERNAL WEB TABLE gpstate_replication_mode ( 
     Mirror TEXT,
     Datadir TEXT, 
@@ -58,7 +61,8 @@ FORMAT 'TEXT' (DELIMITER '|');
 ```
 ``` sql
 DROP EXTERNAL WEB TABLE IF EXISTS gpstate_summary;
-
+```
+```sql
 CREATE EXTERNAL WEB TABLE gpstate_summary (
     descr TEXT,
     value TEXT)
@@ -66,15 +70,31 @@ EXECUTE 'gpstate | grep -E -- ''^.*\[INFO\]:-\s*(.*)=.*$'' | awk -F ''[[:space:]
 FORMAT 'TEXT' (DELIMITER '|');
 ```
 ```sql
-CREATE OR REPLACE VIEW gpcc_disk_history_view AS
-SELECT ctime, gdh.hostname, gdh.filesystem, total_bytes, bytes_used, bytes_available, hosttype
-FROM gpcc_disk_history gdh
-JOIN gpmetrics.gp_data_dirs gdd
-ON gdh.hostname = gdd.tmphostname
-    AND gdh.data_dirs @> STRING_TO_ARRAY(gdd.datadir, '')::TEXT[]
-WHERE
-    ARRAY_UPPER(data_dirs, 1) IS NOT NULL
-GROUP BY 1, 2, 3, 4, 5, 6, 7;
+DROP EXTERNAL WEB TABLE IF EXISTS madlib_version;
+```
+```sql
+CREATE EXTERNAL WEB TABLE madlib_version (
+    version TEXT)
+EXECUTE 'gppkg -q --all | grep -E -- ''madlib'' | awk -F ''-'' ''{print $2}''' ON MASTER
+FORMAT 'TEXT';
+```
+```sql
+DROP EXTERNAL WEB TABLE IF EXISTS postgis_version;
+```
+```sql
+CREATE EXTERNAL WEB TABLE postgis_version (
+    version TEXT)
+EXECUTE 'gppkg -q --all | grep -E -- ''postgis'' | awk -F ''-'' ''{print $2}''' ON MASTER
+FORMAT 'TEXT';
+ ```
+```sql   
+DROP EXTERNAL WEB TABLE IF EXISTS system_uptime;
+```
+```sql
+CREATE EXTERNAL WEB TABLE system_uptime (
+    info TEXT)
+EXECUTE 'uptime -p | awk ''{print $2, $3, $4, $5}''' ON MASTER
+FORMAT 'TEXT';
 ```
 17. Import the `gpcc/gpcc_dashboard.json`, and `gpcc/gpcc_*.json` files as new dashboards on Grafana. The `gpcc/*` dashboard components require Grafana, Greenplum Database and Greenplum Database Command Center services to be valid and working in order to run properly but the `Uptime (Master)` component, which additionally requires, the InfluxDB and Telegraf services.
 18. (Optional) Import the `gp-cluster/gpcluster-dashboard.json`, and `host-dashboard_rev2/host-dashboard_rev2.json` file as new dashboards on Grafana. Those two dashboards, require Grafana, Greenplum Database, Greenplum Database Command Center and also InfluxDB, Telegraf services to be valid and working, to run properly.
