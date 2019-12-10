@@ -122,7 +122,7 @@
           ],
           "metricColumn": "CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END",
           "rawQuery": true,
-          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END AS metric,\n  100* SUM(bytes_used)/SUM(total_bytes) AS \"Disk Space Used\"\nFROM gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpcc_disk_history_view) last_\nWHERE\n  hist.ctime = last_.ctime\nGROUP BY hist.ctime, metric\nORDER BY metric",
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END AS metric,\n  100* SUM(bytes_used)/SUM(total_bytes) AS \"Disk Space Used\"\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hist.ctime = last_.ctime\nGROUP BY hist.ctime, metric\nORDER BY metric",
           "refId": "A",
           "select": [
             [
@@ -217,7 +217,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_used) AS \"Disk Space Used\"\nFROM gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'master'\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_used) AS \"Disk Space Used\"\nFROM gpmetrics.gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'master'\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -368,7 +368,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_available) AS \"Disk Space Available\"\nFROM gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'master'\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_available) AS \"Disk Space Available\"\nFROM gpmetrics.gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'master'\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -537,7 +537,7 @@
           ],
           "metricColumn": "CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END",
           "rawQuery": true,
-          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END AS metric,\n  100* SUM(bytes_available)/SUM(total_bytes) AS \"Disk Space Available\"\nFROM gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpcc_disk_history_view) last_\nWHERE\n  hist.ctime = last_.ctime\nGROUP BY hist.ctime, metric\nORDER BY metric",
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END AS metric,\n  100* SUM(bytes_available)/SUM(total_bytes) AS \"Disk Space Available\"\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hist.ctime = last_.ctime\nGROUP BY hist.ctime, metric\nORDER BY metric",
           "refId": "A",
           "select": [
             [
@@ -632,7 +632,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_used) AS \"Disk Space Used\"\nFROM gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'sdw'\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_used) AS \"Disk Space Used\"\nFROM gpmetrics.gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'sdw'\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -783,7 +783,7 @@
           ],
           "metricColumn": "none",
           "rawQuery": true,
-          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_available) AS \"Disk Space Available\"\nFROM gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'sdw'\nGROUP BY 1\nORDER BY 1",
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_available) AS \"Disk Space Available\"\nFROM gpmetrics.gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'sdw'\nGROUP BY 1\nORDER BY 1",
           "refId": "A",
           "select": [
             [
@@ -952,7 +952,7 @@
           ],
           "metricColumn": "CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END",
           "rawQuery": true,
-          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END AS metric,\n  SUM(total_bytes) AS \"Disk Space Total\"\nFROM gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpcc_disk_history_view) last_\nWHERE\n  hist.ctime = last_.ctime\nGROUP BY hist.ctime, metric\nORDER BY metric",
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END AS metric,\n  SUM(total_bytes) AS \"Disk Space Total\"\nFROM gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hist.ctime = last_.ctime\nGROUP BY hist.ctime, metric\nORDER BY metric",
           "refId": "A",
           "select": [
             [
@@ -1058,7 +1058,7 @@
           ],
           "metricColumn": "(hostname, filesystem)",
           "rawQuery": true,
-          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  100.00 * bytes_used / total_bytes AS \"bytes_used_perc\"\nFROM gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, bytes_used, total_bytes\nORDER BY hostname, filesystem",
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  100.00 * bytes_used / total_bytes AS \"bytes_used_perc\"\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, bytes_used, total_bytes\nORDER BY hostname, filesystem",
           "refId": "A",
           "select": [
             [
@@ -1167,7 +1167,7 @@
           ],
           "metricColumn": "(hostname, filesystem)",
           "rawQuery": true,
-          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  100.00 * bytes_available / total_bytes AS bytes_available_perc\nFROM gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, bytes_available, total_bytes\nORDER BY hostname, filesystem",
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  100.00 * bytes_available / total_bytes AS bytes_available_perc\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, bytes_available, total_bytes\nORDER BY hostname, filesystem",
           "refId": "A",
           "select": [
             [
@@ -1256,7 +1256,7 @@
           "group": [],
           "metricColumn": "(hostname, filesystem)",
           "rawQuery": true,
-          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  bytes_available\nFROM gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, bytes_available\nORDER BY hostname, filesystem",
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  bytes_available\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, bytes_available\nORDER BY hostname, filesystem",
           "refId": "A",
           "select": [
             [
@@ -1339,7 +1339,7 @@
           "group": [],
           "metricColumn": "(hostname, filesystem)",
           "rawQuery": true,
-          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  total_bytes AS \"total_bytes\"\nFROM gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, total_bytes\nORDER BY hostname, filesystem",
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  total_bytes AS \"total_bytes\"\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, total_bytes\nORDER BY hostname, filesystem",
           "refId": "A",
           "select": [
             [
@@ -1388,7 +1388,7 @@
     "list": []
   },
   "time": {
-    "from": "now-30m",
+    "from": "now-15m",
     "to": "now"
   },
   "timepicker": {
@@ -1399,5 +1399,5 @@
   "timezone": "",
   "title": "Storage Status",
   "uid": "UtJcuN-Zz",
-  "version": 5
+  "version": 3
 }
