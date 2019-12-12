@@ -11,5 +11,6 @@ datasources:
       password: password
     jsonData:
       sslmode: "disable"
+      postgresVersion: 803
     version: 1
     editable: true
