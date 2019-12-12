@@ -1,0 +1,5 @@
+gpcc/gpcc_cluster_metrics.json
+gpcc/gpcc_dashboard.json
+gpcc/gpcc_host_metrics.json
+gpcc/gpcc_segment_status.json
+gpcc/gpcc_storage_status.json
