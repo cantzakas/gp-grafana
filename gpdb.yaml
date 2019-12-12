@@ -13,16 +13,3 @@ datasources:
       sslmode: "disable"
     version: 1
     editable: true
-
-  - name: Postgres-admin
-    type: postgres
-    url: localhost:5432
-    isDefault: true
-    database: gpadmin
-    user: gpadmin
-    secureJsonData:
-      password: password
-    jsonData:
-      sslmode: "disable"
-    version: 1
-    editable: true
