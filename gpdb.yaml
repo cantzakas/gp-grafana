@@ -1,14 +1,27 @@
 apiVersion: 1
 
 datasources:
-  - name: Postgres
+  - name: gpdb-gpmetrics
     type: postgres
     url: localhost:5432
     isDefault: true
     database: gpperfmon
     user: gpmon
     secureJsonData:
-      password: password
+      password: w2BmLV3Ywc76k
+    jsonData:
+      sslmode: "disable"
+      postgresVersion: "8.3"
+    version: 1
+    editable: true
+  - name: gpdb-admin
+    type: postgres
+    url: localhost:5432
+    isDefault: true
+    database: gpadmin
+    user: gpadmin
+    secureJsonData:
+      password: w2BmLV3Ywc76k
     jsonData:
       sslmode: "disable"
       postgresVersion: "8.3"
