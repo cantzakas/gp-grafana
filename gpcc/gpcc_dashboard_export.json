@@ -15,8 +15,7 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "id": 2,
-  "iteration": 1576499438957,
+  "iteration": 1576507701336,
   "links": [],
   "panels": [
     {
@@ -2402,7 +2401,7 @@
     ]
   },
   "timezone": "",
-  "title": "Pivotal Greenplum Command Center Dashboard",
+  "title": "Main",
   "uid": "chhyRLJWk",
   "version": 1
 }
