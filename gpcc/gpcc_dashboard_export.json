@@ -15,7 +15,8 @@
   "editable": true,
   "gnetId": null,
   "graphTooltip": 0,
-  "iteration": 1576507701336,
+  "id": 27,
+  "iteration": 1576512036650,
   "links": [],
   "panels": [
     {
@@ -208,7 +209,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "greenplum-admin",
+      "datasource": "greenplum-metrics",
       "decimals": 0,
       "format": "none",
       "gauge": {
@@ -530,7 +531,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "greenplum-admin",
+      "datasource": "greenplum-metrics",
       "decimals": 2,
       "format": "none",
       "gauge": {
@@ -638,7 +639,7 @@
         "rgba(237, 129, 40, 0.89)",
         "#d44a3a"
       ],
-      "datasource": "greenplum-admin",
+      "datasource": "greenplum-metrics",
       "format": "none",
       "gauge": {
         "maxValue": 100,
