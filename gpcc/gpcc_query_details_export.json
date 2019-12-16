@@ -1,0 +1,1153 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 11,
+  "iteration": 1576503664840,
+  "links": [
+    {
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "type": "dashboards"
+    }
+  ],
+  "panels": [
+    {
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 0,
+        "y": 0
+      },
+      "id": 3,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "time",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  \"time\" AS \"time\",\n  query_id AS \"Query\",\n  query_user AS \"User\",\n  query_database AS \"Database\",\n  query_res_group AS \"Resource Group\",\n  query_planner AS \"Planner\"\nFROM queries_history_dashboard_view\nWHERE\n  query_id = '$search_queryid'\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "query_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Query"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_user"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "User"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_database"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Database"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_res_group"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Resource Group"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_planner"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Planner"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "queries_history_dashboard_view",
+          "timeColumn": "\"time\"",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "query_id",
+                "=",
+                "'$search_queryid'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 0
+      },
+      "id": 6,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "CPU Master %",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "cpu_master_percent",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percent"
+        },
+        {
+          "alias": "CPU Segment %",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "cpu_segs_percent",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percent"
+        },
+        {
+          "alias": "CPU Time",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "h:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "cpu_segs",
+          "thresholds": [],
+          "type": "number",
+          "unit": "s"
+        },
+        {
+          "alias": "CPU Skew %",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "skew_cpu",
+          "thresholds": [],
+          "type": "number",
+          "unit": "percent"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "time",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  cpu_master_percent,\n  cpu_segs_percent,\n  cpu_segs,\n  skew_cpu\nFROM gpmetrics.gpcc_queries_history\nWHERE\n  tmid || '-' || ssid || '-' || ccnt = '$search_queryid'\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_master_percent"
+                ],
+                "type": "column"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "cpu_segs_percent"
+                ],
+                "type": "column"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "cpu_segs"
+                ],
+                "type": "column"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "skew_cpu"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpmetrics.gpcc_queries_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "",
+              "params": [
+                "tmid || '-' || ssid || '-' || ccnt",
+                "=",
+                "'$search_queryid'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 0,
+        "y": 3
+      },
+      "id": 5,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "MM/DD/YY h:mm:ss a",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Submitted",
+          "thresholds": [],
+          "type": "date",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "MM/DD/YY h:mm:ss a",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Ended",
+          "thresholds": [],
+          "type": "date",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "time",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  query_ended_time AS \"time\",\n  query_submitted_time AS \"Submitted\",\n  query_queued_time AS \"Queued Time\",\n  query_run_time AS \"Run Time\",\n  query_ended_time AS \"Ended\"\nFROM queries_history_dashboard_view\nWHERE\n  query_id = '$search_queryid'\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "query_submitted_time"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Submitted"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_queued_time"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Queued Time"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_run_time"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Run Time"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_ended_time"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Ended"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "queries_history_dashboard_view",
+          "timeColumn": "query_ended_time",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "query_id",
+                "=",
+                "'$search_queryid'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 3,
+        "w": 12,
+        "x": 12,
+        "y": 3
+      },
+      "id": 7,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "Memory",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "memory",
+          "thresholds": [],
+          "type": "number",
+          "unit": "bytes"
+        },
+        {
+          "alias": "Spill Files",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "spill_size",
+          "thresholds": [],
+          "type": "number",
+          "unit": "bytes"
+        },
+        {
+          "alias": "Disk R",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "h:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "disk_read_bytes",
+          "thresholds": [],
+          "type": "number",
+          "unit": "bytes"
+        },
+        {
+          "alias": "Disk W",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "disk_write_bytes",
+          "thresholds": [],
+          "type": "number",
+          "unit": "bytes"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "time",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  memory,\n  spill_size,\n  disk_read_bytes,\n  disk_write_bytes\nFROM gpmetrics.gpcc_queries_history\nWHERE\n  tmid || '-' || ssid || '-' || ccnt = '$search_queryid'\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "memory"
+                ],
+                "type": "column"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "spill_size"
+                ],
+                "type": "column"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "disk_read_bytes"
+                ],
+                "type": "column"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "disk_write_bytes"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpmetrics.gpcc_queries_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "",
+              "params": [
+                "tmid || '-' || ssid || '-' || ccnt",
+                "=",
+                "'$search_queryid'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 15,
+        "w": 12,
+        "x": 0,
+        "y": 6
+      },
+      "id": 4,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "time",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  \"time\" AS \"time\",\n  query_text AS \"Query Text\"\nFROM queries_history_dashboard_view\nWHERE\n  query_id = '$search_queryid'\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "query_text"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Query Text"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "queries_history_dashboard_view",
+          "timeColumn": "\"time\"",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "query_id",
+                "=",
+                "'$search_queryid'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 11,
+        "w": 12,
+        "x": 12,
+        "y": 6
+      },
+      "id": 9,
+      "options": {
+        "displayMode": "gradient",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "light-yellow",
+                "value": 75
+              },
+              {
+                "color": "light-red",
+                "value": 90
+              }
+            ],
+            "title": "",
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1"
+              ],
+              "type": "column"
+            },
+            {
+              "params": [
+                "2"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "'Step ' || nodeid || ' : ' || node_type",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  'Step ' || nodeid || ' : ' || node_type AS metric,\n  avg(row_skew) AS \"row_skew\"\nFROM queries_history_details_dashboard_view\nWHERE\n  $__timeFilter(ctime) AND\n  tmid || '-' || ssid || '-' || ccnt = '$search_queryid'\nGROUP BY 1, nodeid, node_type\nORDER BY 1, nodeid",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "row_skew"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "row_skew"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "queries_history_details_dashboard_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "name": "",
+              "params": [
+                "tmid || '-' || ssid || '-' || ccnt",
+                "=",
+                "'$search_queryid'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Row Skew",
+      "type": "bargauge"
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 7,
+        "w": 12,
+        "x": 12,
+        "y": 17
+      },
+      "id": 11,
+      "links": [],
+      "options": {
+        "displayMode": "gradient",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [
+              {
+                "id": 0,
+                "op": "=",
+                "text": "N/A",
+                "type": 1,
+                "value": "null"
+              }
+            ],
+            "max": 1000000,
+            "min": 0,
+            "nullValueMode": "connected",
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "red",
+                "value": 80
+              }
+            ],
+            "unit": "short"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1"
+              ],
+              "type": "column"
+            },
+            {
+              "params": [
+                "2"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "'Step ' || nodeid || ' : ' || node_type",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  'Step ' || nodeid || ' : ' || node_type AS metric,\n  avg(planrows_sum) AS \"Estimated Rows\",\n  avg(total_cost_sum) AS \"Actual Rows\"\nFROM queries_history_details_dashboard_view\nWHERE\n  $__timeFilter(ctime) AND\n  tmid || '-' || ssid || '-' || ccnt = '$search_queryid'\nGROUP BY 1, 2\nORDER BY 1, 2 DESC",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "planrows_sum"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Estimated Rows"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "total_cost_sum"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "Actual Rows"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "queries_history_details_dashboard_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "name": "",
+              "params": [
+                "tmid || '-' || ssid || '-' || ccnt",
+                "=",
+                "'$search_queryid'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Actual vs. Estimated Rows",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 4,
+        "w": 12,
+        "x": 12,
+        "y": 24
+      },
+      "id": 10,
+      "options": {
+        "displayMode": "gradient",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "light-yellow",
+                "value": 75
+              },
+              {
+                "color": "light-red",
+                "value": 90
+              }
+            ],
+            "title": "",
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "1"
+              ],
+              "type": "column"
+            },
+            {
+              "params": [
+                "2"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "''Step ' || nodeid || ' : ' || node_type",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  'Step ' || nodeid || ' : ' || node_type AS metric,\n  avg(estimation_accuracy) AS \"estimation_accuracy\"\nFROM queries_history_details_dashboard_view\nWHERE\n  $__timeFilter(ctime) AND\n  tmid || '-' || ssid || '-' || ccnt = '$search_queryid'\nGROUP BY 1, 2\nORDER BY 1, 2 DESC",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "estimation_accuracy"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "avg"
+                ],
+                "type": "aggregate"
+              },
+              {
+                "params": [
+                  "estimation_accuracy"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "queries_history_details_dashboard_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "name": "",
+              "params": [
+                "tmid || '-' || ssid || '-' || ccnt",
+                "=",
+                "'$search_queryid'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Estimation Accuracy",
+      "type": "bargauge"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 20,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": "",
+        "current": {
+          "text": "1575880330-1347-417",
+          "value": "1575880330-1347-417"
+        },
+        "hide": 2,
+        "includeAll": false,
+        "label": "QueryID",
+        "multi": false,
+        "name": "search_queryid",
+        "options": [
+          {
+            "selected": false,
+            "text": "*",
+            "value": "*"
+          }
+        ],
+        "query": "*",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1m"
+    ]
+  },
+  "timezone": "",
+  "title": "Query Details",
+  "uid": "ZSpaR8-Zz",
+  "version": 1
+}

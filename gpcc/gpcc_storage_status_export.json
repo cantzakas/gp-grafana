@@ -1,0 +1,1367 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "description": "Disk capacity information and history",
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 9,
+  "links": [],
+  "panels": [
+    {
+      "cacheTimeout": null,
+      "datasource": "greenplum-metrics",
+      "id": 2,
+      "links": [],
+      "options": {
+        "displayMode": "basic",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [
+              {
+                "id": 0,
+                "op": "=",
+                "text": "N/A",
+                "type": 1,
+                "value": "null"
+              }
+            ],
+            "max": 100,
+            "min": 0,
+            "nullValueMode": "connected",
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "light-yellow",
+                "value": 75
+              },
+              {
+                "color": "light-red",
+                "value": 90
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "hosttype"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END AS metric,\n  100* SUM(bytes_used)/SUM(total_bytes) AS \"Disk Space Used\"\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hist.ctime = last_.ctime\nGROUP BY hist.ctime, metric\nORDER BY metric",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "100* SUM(bytes_used)/SUM(total_bytes)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Used"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Used Storage by Host Type",
+      "type": "bargauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "greenplum-metrics",
+      "fill": 2,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 9,
+        "x": 6,
+        "y": 0
+      },
+      "id": 5,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.4.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Disk Space Used",
+          "color": "#FFEE52"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_used) AS \"Disk Space Used\"\nFROM gpmetrics.gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'master'\nGROUP BY 1\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "SUM(bytes_used)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Used"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "SUM(bytes_available)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Available"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "hosttype",
+                "=",
+                "'sdw'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "GP Masters, Storage Usage History",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 2,
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "greenplum-metrics",
+      "fill": 2,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 9,
+        "x": 15,
+        "y": 0
+      },
+      "id": 16,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.4.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_available) AS \"Disk Space Available\"\nFROM gpmetrics.gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'master'\nGROUP BY 1\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "SUM(bytes_used)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Used"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "SUM(bytes_available)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Available"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "hosttype",
+                "=",
+                "'sdw'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "GP Masters, Storage Usage History",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 2,
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 4,
+        "w": 6,
+        "x": 0,
+        "y": 3
+      },
+      "id": 3,
+      "links": [],
+      "options": {
+        "displayMode": "basic",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [
+              {
+                "id": 0,
+                "op": "=",
+                "text": "N/A",
+                "type": 1,
+                "value": "null"
+              }
+            ],
+            "max": 100,
+            "min": 0,
+            "nullValueMode": "connected",
+            "thresholds": [
+              {
+                "color": "light-red",
+                "value": null
+              },
+              {
+                "color": "light-yellow",
+                "value": 10
+              },
+              {
+                "color": "green",
+                "value": 25
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "hosttype"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END AS metric,\n  100* SUM(bytes_available)/SUM(total_bytes) AS \"Disk Space Available\"\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hist.ctime = last_.ctime\nGROUP BY hist.ctime, metric\nORDER BY metric",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "100* SUM(bytes_available)/SUM(total_bytes)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Available"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Free Storage % by Host Type",
+      "type": "bargauge"
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "greenplum-metrics",
+      "fill": 2,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 9,
+        "x": 6,
+        "y": 5
+      },
+      "id": 15,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.4.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [
+        {
+          "alias": "Disk Space Used",
+          "color": "#FFEE52"
+        }
+      ],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_used) AS \"Disk Space Used\"\nFROM gpmetrics.gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'sdw'\nGROUP BY 1\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "SUM(bytes_used)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Used"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "SUM(bytes_available)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Available"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "hosttype",
+                "=",
+                "'sdw'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "GP Segments, Storage Usage History",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 2,
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "aliasColors": {},
+      "bars": false,
+      "cacheTimeout": null,
+      "dashLength": 10,
+      "dashes": false,
+      "datasource": "greenplum-metrics",
+      "fill": 2,
+      "fillGradient": 0,
+      "gridPos": {
+        "h": 5,
+        "w": 9,
+        "x": 15,
+        "y": 5
+      },
+      "id": 17,
+      "legend": {
+        "avg": false,
+        "current": false,
+        "max": false,
+        "min": false,
+        "show": true,
+        "total": false,
+        "values": false
+      },
+      "lines": true,
+      "linewidth": 1,
+      "links": [],
+      "nullPointMode": "null",
+      "options": {
+        "dataLinks": []
+      },
+      "percentage": false,
+      "pluginVersion": "6.4.3",
+      "pointradius": 2,
+      "points": false,
+      "renderer": "flot",
+      "seriesOverrides": [],
+      "spaceLength": 10,
+      "stack": false,
+      "steppedLine": false,
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            }
+          ],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  $__timeGroupAlias(ctime,$__interval),\n  SUM(bytes_available) AS \"Disk Space Available\"\nFROM gpmetrics.gpcc_disk_history_view\nWHERE\n  $__timeFilter(ctime) AND\n  hosttype = 'sdw'\nGROUP BY 1\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "SUM(bytes_used)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Used"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "SUM(bytes_available)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Available"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "hosttype",
+                "=",
+                "'sdw'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "thresholds": [],
+      "timeFrom": null,
+      "timeRegions": [],
+      "timeShift": null,
+      "title": "GP Segments, Storage Usage History",
+      "tooltip": {
+        "shared": true,
+        "sort": 0,
+        "value_type": "individual"
+      },
+      "type": "graph",
+      "xaxis": {
+        "buckets": null,
+        "mode": "time",
+        "name": null,
+        "show": true,
+        "values": []
+      },
+      "yaxes": [
+        {
+          "decimals": 2,
+          "format": "bytes",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": true
+        },
+        {
+          "format": "short",
+          "label": null,
+          "logBase": 1,
+          "max": null,
+          "min": null,
+          "show": false
+        }
+      ],
+      "yaxis": {
+        "align": false,
+        "alignLevel": null
+      }
+    },
+    {
+      "cacheTimeout": null,
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 3,
+        "w": 6,
+        "x": 0,
+        "y": 7
+      },
+      "id": 4,
+      "links": [],
+      "options": {
+        "displayMode": "basic",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [
+              {
+                "id": 0,
+                "op": "=",
+                "text": "N/A",
+                "type": 1,
+                "value": "null"
+              }
+            ],
+            "max": 322000000000000,
+            "min": 0,
+            "nullValueMode": "connected",
+            "thresholds": [
+              {
+                "color": "light-red",
+                "value": null
+              },
+              {
+                "color": "light-yellow",
+                "value": 5000000000000
+              },
+              {
+                "color": "green",
+                "value": 10000000000000
+              }
+            ],
+            "unit": "bytes"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "hosttype"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  CASE hosttype WHEN 'master' THEN 'Masters' WHEN 'sdw' THEN 'Segments' END AS metric,\n  SUM(total_bytes) AS \"Disk Space Total\"\nFROM gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hist.ctime = last_.ctime\nGROUP BY hist.ctime, metric\nORDER BY metric",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "SUM(total_bytes)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Disk Space Total"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Free Storage by Host Type",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 18,
+        "w": 6,
+        "x": 0,
+        "y": 10
+      },
+      "hideTimeOverride": true,
+      "id": 11,
+      "interval": "",
+      "options": {
+        "displayMode": "gradient",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "light-yellow",
+                "value": 75
+              },
+              {
+                "color": "light-red",
+                "value": 90
+              }
+            ],
+            "title": "",
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "2"
+              ],
+              "type": "column"
+            },
+            {
+              "params": [
+                "3"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "(hostname, filesystem)",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  100.00 * bytes_used / total_bytes AS \"bytes_used_perc\"\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, bytes_used, total_bytes\nORDER BY hostname, filesystem",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "100.00 * bytes_used / total_bytes"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "bytes_used_%"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "hosttype",
+                "=",
+                "'sdw'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": "1h",
+      "timeShift": "1h",
+      "title": "GP Segments,  Used Storage % by Hostname, Data Directory",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 18,
+        "w": 6,
+        "x": 6,
+        "y": 10
+      },
+      "hideTimeOverride": true,
+      "id": 12,
+      "options": {
+        "displayMode": "basic",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "light-red",
+                "value": null
+              },
+              {
+                "color": "light-yellow",
+                "value": 10
+              },
+              {
+                "color": "green",
+                "value": 25
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [
+            {
+              "params": [
+                "$__interval",
+                "none"
+              ],
+              "type": "time"
+            },
+            {
+              "params": [
+                "2"
+              ],
+              "type": "column"
+            },
+            {
+              "params": [
+                "3"
+              ],
+              "type": "column"
+            }
+          ],
+          "metricColumn": "(hostname, filesystem)",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  100.00 * bytes_available / total_bytes AS bytes_available_perc\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, bytes_available, total_bytes\nORDER BY hostname, filesystem",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "100.00 * bytes_available / total_bytes"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "bytes_available_%"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "hosttype",
+                "=",
+                "'sdw'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": "1h",
+      "timeShift": "1h",
+      "title": "GP Segments, Free Storage % by Hostname, Data Directory",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 18,
+        "w": 6,
+        "x": 12,
+        "y": 10
+      },
+      "hideTimeOverride": true,
+      "id": 14,
+      "options": {
+        "displayMode": "basic",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "light-red",
+                "value": null
+              },
+              {
+                "color": "light-yellow",
+                "value": 10
+              },
+              {
+                "color": "green",
+                "value": 25
+              }
+            ],
+            "unit": "bytes"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "(hostname, filesystem)",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  bytes_available\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, bytes_available\nORDER BY hostname, filesystem",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "bytes_available"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "hosttype",
+                "=",
+                "'sdw'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": "1h",
+      "timeShift": "1h",
+      "title": "GP Segments, Free Storage by Hostname, Data Directory",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 18,
+        "w": 6,
+        "x": 18,
+        "y": 10
+      },
+      "hideTimeOverride": true,
+      "id": 13,
+      "options": {
+        "displayMode": "basic",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "light-red",
+                "value": null
+              },
+              {
+                "color": "light-yellow",
+                "value": 10
+              },
+              {
+                "color": "green",
+                "value": 25
+              }
+            ],
+            "unit": "bytes"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "horizontal"
+      },
+      "pluginVersion": "6.4.3",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "(hostname, filesystem)",
+          "rawQuery": true,
+          "rawSql": "SELECT\n  hist.ctime AS \"time\",\n  (hostname, filesystem) AS \"metric\",\n  total_bytes AS \"total_bytes\"\nFROM gpmetrics.gpcc_disk_history_view hist, (SELECT MAX(ctime) AS ctime FROM gpmetrics.gpcc_disk_history_view) last_\nWHERE\n  hosttype = 'sdw'\n  AND hist.ctime = last_.ctime\nGROUP BY hist.ctime, hostname, filesystem, total_bytes\nORDER BY hostname, filesystem",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "total_bytes"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "total_bytes"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_disk_history_view",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "hosttype",
+                "=",
+                "'sdw'"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": "1h",
+      "timeShift": "1h",
+      "title": "GP Segments, Storage Total by Hostname, Data Directory",
+      "type": "bargauge"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 20,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-15m",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1m"
+    ]
+  },
+  "timezone": "",
+  "title": "Storage Status",
+  "uid": "UtJcuN-Zz",
+  "version": 1
+}

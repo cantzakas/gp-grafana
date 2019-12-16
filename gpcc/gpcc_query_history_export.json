@@ -1,0 +1,633 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 10,
+  "iteration": 1576503631442,
+  "links": [
+    {
+      "asDropdown": false,
+      "icon": "external link",
+      "includeVars": true,
+      "keepTime": true,
+      "tags": [],
+      "targetBlank": false,
+      "title": "Select Dashboard",
+      "type": "dashboards"
+    }
+  ],
+  "panels": [
+    {
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 27,
+        "w": 24,
+        "x": 0,
+        "y": 0
+      },
+      "id": 2,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 7,
+        "desc": true
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": true,
+          "linkTargetBlank": false,
+          "linkTooltip": "${__cell_14}",
+          "linkUrl": "/d/ZSpaR8-Zz/query-history-details?orgId=1&var-search_queryid=${__cell_1}",
+          "mappingType": 1,
+          "pattern": "Query",
+          "thresholds": [],
+          "type": "string",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "MM/DD/YY h:mm:ss a",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Submitted",
+          "thresholds": [],
+          "type": "date",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "link": false,
+          "mappingType": 1,
+          "pattern": "Query Text",
+          "preserveFormat": true,
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short",
+          "valueMaps": [
+            {
+              "text": "''",
+              "value": "*"
+            }
+          ]
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "time",
+          "thresholds": [],
+          "type": "hidden",
+          "unit": "short"
+        },
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "MM/DD/YY h:mm:ss a",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Ended",
+          "thresholds": [],
+          "type": "date",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "hide": false,
+          "metricColumn": "none",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  \"time\" AS \"time\",\n  query_id AS \"Query\",\n  query_status AS \"Status\",\n  query_user AS \"User\",\n  query_database AS \"Database\",\n  query_submitted_time AS \"Submitted\",\n  query_queued_time AS \"Queued Time\",\n  query_run_time AS \"Run Time\",\n  query_ended_time AS \"Ended\",\n  query_cpu_skew AS \"CPU Skew\",\n  query_spill_size AS \"Spill Files\",\n  query_res_group AS \"Resource Group\",\n  query_res_queue AS \"Queue\",\n  query_priority AS \"Priority\",\n  query_text AS \"Query Text\"\nFROM queries_history_dashboard_view\nWHERE\n  $__timeFilter(\"time\") AND\n  query_database IN ($search_param_database) AND\n  query_user IN ($search_param_user) AND\n  query_status IN ($search_param_status) AND\n  query_res_group IN ($search_param_resgroup) AND\n  query_spill_size IN ($search_param_hasspill) AND\n  query_cpu_skew IN ($search_param_hascpuskew)\nORDER BY 1",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "query_id"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Query"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_status"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Status"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_user"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "User"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_database"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Database"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_submitted_time"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Submitted"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_queued_time"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Queued Time"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_run_time"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Run Time"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_ended_time"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Ended"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_cpu_skew"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "CPU Skew"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_spill_size"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Spill Files"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_res_group"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Resource Group"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_res_queue"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Queue"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_priority"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Priority"
+                ],
+                "type": "alias"
+              }
+            ],
+            [
+              {
+                "params": [
+                  "query_text"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Query Text"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "queries_history_dashboard_view",
+          "timeColumn": "\"time\"",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "query_database",
+                "IN",
+                "($search_param_database)"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "query_user",
+                "IN",
+                "($search_param_user)"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "query_status",
+                "IN",
+                "($search_param_status)"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "query_res_group",
+                "IN",
+                "($search_param_resgroup)"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "query_spill_size",
+                "IN",
+                "($search_param_hasspill)"
+              ],
+              "type": "expression"
+            },
+            {
+              "datatype": "text",
+              "name": "",
+              "params": [
+                "query_cpu_skew",
+                "IN",
+                "($search_param_hascpuskew)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "",
+      "transform": "table",
+      "type": "table"
+    }
+  ],
+  "refresh": "1m",
+  "schemaVersion": 20,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": "",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "greenplum-metrics",
+        "definition": "SELECT datname FROM pg_catalog.pg_database pd WHERE datallowconn = true AND datistemplate = false",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Database",
+        "multi": true,
+        "name": "search_param_database",
+        "options": [],
+        "query": "SELECT datname FROM pg_catalog.pg_database pd WHERE datallowconn = true AND datistemplate = false",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "greenplum-metrics",
+        "definition": "SELECT u.usename  FROM pg_catalog.pg_user u ORDER BY 1",
+        "hide": 0,
+        "includeAll": true,
+        "label": "User",
+        "multi": true,
+        "name": "search_param_user",
+        "options": [],
+        "query": "SELECT u.usename  FROM pg_catalog.pg_user u ORDER BY 1",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Status",
+        "multi": true,
+        "name": "search_param_status",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "Done",
+            "value": "Done"
+          },
+          {
+            "selected": false,
+            "text": "Cancelled",
+            "value": "Cancelled"
+          },
+          {
+            "selected": false,
+            "text": "Error",
+            "value": "Error"
+          }
+        ],
+        "query": "Done,Cancelled,Error",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": "",
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "greenplum-admin",
+        "definition": "SELECT rsgname FROM pg_catalog.pg_resgroup pgr",
+        "hide": 0,
+        "includeAll": true,
+        "label": "Resource Group",
+        "multi": true,
+        "name": "search_param_resgroup",
+        "options": [],
+        "query": "SELECT rsgname FROM pg_catalog.pg_resgroup pgr",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 0,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      },
+      {
+        "allValue": "",
+        "current": {
+          "text": "All",
+          "value": [
+            "$__all"
+          ]
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Has Spill",
+        "multi": false,
+        "name": "search_param_hasspill",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "Yes",
+            "value": "Yes"
+          },
+          {
+            "selected": false,
+            "text": "No",
+            "value": "No"
+          }
+        ],
+        "query": "Yes,No",
+        "skipUrlSync": false,
+        "type": "custom"
+      },
+      {
+        "allValue": "",
+        "current": {
+          "selected": false,
+          "tags": [],
+          "text": "All",
+          "value": "$__all"
+        },
+        "hide": 0,
+        "includeAll": true,
+        "label": "Has CPU Skew",
+        "multi": false,
+        "name": "search_param_hascpuskew",
+        "options": [
+          {
+            "selected": true,
+            "text": "All",
+            "value": "$__all"
+          },
+          {
+            "selected": false,
+            "text": "Yes",
+            "value": "Yes"
+          },
+          {
+            "selected": false,
+            "text": "No",
+            "value": "No"
+          }
+        ],
+        "query": "Yes,No",
+        "skipUrlSync": false,
+        "type": "custom"
+      }
+    ]
+  },
+  "time": {
+    "from": "now-3h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "1m"
+    ]
+  },
+  "timezone": "",
+  "title": "Query History",
+  "uid": "GmNgPAaWk",
+  "version": 1
+}

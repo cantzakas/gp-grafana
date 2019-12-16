@@ -1,0 +1,1115 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 6,
+  "iteration": 1576503378975,
+  "links": [],
+  "panels": [
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 0,
+        "y": 0
+      },
+      "id": 32,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "orange",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  cpu_sys AS \"System (%)\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime) AND\n  hostname IN ($host)\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_sys"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "System (%)"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "hostname",
+                "IN",
+                "($host)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "System CPU (%)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 0
+      },
+      "id": 148,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "orange",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  cpu_user AS \"User (%)\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime)\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_user"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "User (%)"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "User CPU (%)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 0
+      },
+      "id": 147,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 10
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "green",
+                "value": 30
+              }
+            ],
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  cpu_idle AS \"Idle (%)\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime) AND\n  hostname IN ($host)\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_idle"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Idle (%)"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "hostname",
+                "IN",
+                "($host)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Idle CPU (%)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 3,
+        "w": 8,
+        "x": 0,
+        "y": 6
+      },
+      "id": 101,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 140000000000,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 9800000000000
+              },
+              {
+                "color": "orange",
+                "value": 11200000000000
+              },
+              {
+                "color": "red",
+                "value": 12600000000000
+              }
+            ],
+            "title": "",
+            "unit": "bytes"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  ROUND(mem_actual_used, 2) AS \"Used\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime) AND\n  hostname IN ($host)\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "ROUND(mem_actual_used, 2)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Used"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "hostname",
+                "IN",
+                "($host)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Used Memory",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 8,
+        "y": 6
+      },
+      "id": 102,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 70
+              },
+              {
+                "color": "orange",
+                "value": 80
+              },
+              {
+                "color": "red",
+                "value": 90
+              }
+            ],
+            "title": "",
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  ROUND(100.00 * mem_actual_used/mem_total, 2) AS \"Used (%)\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime) AND\n  hostname IN ($host)\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "ROUND(100.00 * mem_actual_used/mem_total, 2)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Used (%)"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "hostname",
+                "IN",
+                "($host)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Used Memory (%)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 6,
+        "w": 8,
+        "x": 16,
+        "y": 6
+      },
+      "id": 149,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 100,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "red",
+                "value": null
+              },
+              {
+                "color": "orange",
+                "value": 10
+              },
+              {
+                "color": "yellow",
+                "value": 20
+              },
+              {
+                "color": "green",
+                "value": 30
+              }
+            ],
+            "title": "",
+            "unit": "percent"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  ROUND(100.00 * mem_actual_free/mem_total, 2) AS \"Available (%)\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime)\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "ROUND(100.00 * mem_actual_free/mem_total, 2)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Available (%)"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Available Memory (%)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 3,
+        "w": 8,
+        "x": 0,
+        "y": 9
+      },
+      "id": 150,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 140000000000,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 9800000000000
+              },
+              {
+                "color": "orange",
+                "value": 11200000000000
+              },
+              {
+                "color": "red",
+                "value": 12600000000000
+              }
+            ],
+            "title": "",
+            "unit": "bytes"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  mem_total AS \"Used\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime) AND\n  hostname IN ($host)\nORDER BY 1,2",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "mem_total"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Used"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "hostname",
+                "IN",
+                "($host)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Total Memory",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 12
+      },
+      "id": 123,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 1024000000,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 717000000
+              },
+              {
+                "color": "orange",
+                "value": 819000000
+              },
+              {
+                "color": "red",
+                "value": 922000000
+              }
+            ],
+            "title": "",
+            "unit": "Bps"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  ROUND(disk_rb_rate::DECIMAL, 2) AS \"Read Rate\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime) AND\n  hostname IN ($host)\nORDER BY 1,2",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "ROUND(disk_rb_rate::DECIMAL, 2)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Read Rate"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "hostname",
+                "IN",
+                "($host)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Disk I/O (Read)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 12
+      },
+      "id": 151,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 1024000000,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 717000000
+              },
+              {
+                "color": "orange",
+                "value": 819000000
+              },
+              {
+                "color": "red",
+                "value": 922000000
+              }
+            ],
+            "title": "",
+            "unit": "Bps"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  ROUND(disk_wb_rate::DECIMAL, 2) AS \"Write Rate\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime)\nORDER BY 1,2",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "ROUND(disk_wb_rate::DECIMAL, 2)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Write Rate"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Disk I/O (Write)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 0,
+        "y": 18
+      },
+      "id": 144,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 1024000000,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 717000000
+              },
+              {
+                "color": "orange",
+                "value": 819000000
+              },
+              {
+                "color": "red",
+                "value": 922000000
+              }
+            ],
+            "title": "",
+            "unit": "Bps"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  ROUND(net_rb_rate::DECIMAL, 2) AS \"Read Rate\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime) AND\n  hostname IN ($host)\nORDER BY 1,2",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "ROUND(net_rb_rate::DECIMAL, 2)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Read Rate"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            },
+            {
+              "datatype": "varchar",
+              "name": "",
+              "params": [
+                "hostname",
+                "IN",
+                "($host)"
+              ],
+              "type": "expression"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Network I/O (Read)",
+      "type": "bargauge"
+    },
+    {
+      "datasource": "greenplum-metrics",
+      "gridPos": {
+        "h": 6,
+        "w": 12,
+        "x": 12,
+        "y": 18
+      },
+      "id": 152,
+      "options": {
+        "displayMode": "lcd",
+        "fieldOptions": {
+          "calcs": [
+            "last"
+          ],
+          "defaults": {
+            "decimals": 2,
+            "mappings": [],
+            "max": 1024000000,
+            "min": 0,
+            "thresholds": [
+              {
+                "color": "green",
+                "value": null
+              },
+              {
+                "color": "yellow",
+                "value": 717000000
+              },
+              {
+                "color": "orange",
+                "value": 819000000
+              },
+              {
+                "color": "red",
+                "value": 922000000
+              }
+            ],
+            "title": "",
+            "unit": "Bps"
+          },
+          "override": {},
+          "values": false
+        },
+        "orientation": "vertical"
+      },
+      "pluginVersion": "6.4.3",
+      "repeatDirection": "v",
+      "targets": [
+        {
+          "format": "time_series",
+          "group": [],
+          "metricColumn": "hostname",
+          "rawQuery": false,
+          "rawSql": "SELECT\n  ctime AS \"time\",\n  hostname AS metric,\n  ROUND(net_wb_rate::DECIMAL, 2) AS \"Write Rate\"\nFROM gpcc_system_history\nWHERE\n  $__timeFilter(ctime)\nORDER BY 1,2",
+          "refId": "B",
+          "select": [
+            [
+              {
+                "params": [
+                  "ROUND(net_wb_rate::DECIMAL, 2)"
+                ],
+                "type": "column"
+              },
+              {
+                "params": [
+                  "Write Rate"
+                ],
+                "type": "alias"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Network I/O (Write)",
+      "type": "bargauge"
+    }
+  ],
+  "refresh": "30s",
+  "schemaVersion": 20,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": [
+      {
+        "allValue": null,
+        "current": {
+          "text": "All",
+          "value": "$__all"
+        },
+        "datasource": "greenplum-metrics",
+        "definition": " SELECT hostname from pg_catalog.gp_segment_configuration GROUP BY 1",
+        "hide": 0,
+        "includeAll": true,
+        "label": null,
+        "multi": true,
+        "name": "host",
+        "options": [],
+        "query": " SELECT hostname from pg_catalog.gp_segment_configuration GROUP BY 1",
+        "refresh": 1,
+        "regex": "",
+        "skipUrlSync": false,
+        "sort": 1,
+        "tagValuesQuery": "",
+        "tags": [],
+        "tagsQuery": "",
+        "type": "query",
+        "useTags": false
+      }
+    ]
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "30s"
+    ]
+  },
+  "timezone": "",
+  "title": "Host Metrics",
+  "uid": "RsNBKGbW2",
+  "version": 1
+}

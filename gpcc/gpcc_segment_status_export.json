@@ -1,0 +1,508 @@
+{
+  "annotations": {
+    "list": [
+      {
+        "builtIn": 1,
+        "datasource": "-- Grafana --",
+        "enable": true,
+        "hide": true,
+        "iconColor": "rgba(0, 211, 255, 1)",
+        "name": "Annotations & Alerts",
+        "type": "dashboard"
+      }
+    ]
+  },
+  "editable": true,
+  "gnetId": null,
+  "graphTooltip": 0,
+  "id": 7,
+  "links": [],
+  "panels": [
+    {
+      "cacheTimeout": null,
+      "colorBackground": true,
+      "colorValue": false,
+      "colors": [
+        "#d44a3a",
+        "rgba(237, 129, 40, 0.89)",
+        "#56A64B"
+      ],
+      "datasource": "greenplum-metrics",
+      "decimals": 0,
+      "format": "none",
+      "gauge": {
+        "maxValue": 100,
+        "minValue": 0,
+        "show": false,
+        "thresholdLabels": false,
+        "thresholdMarkers": true
+      },
+      "gridPos": {
+        "h": 2,
+        "w": 6,
+        "x": 0,
+        "y": 0
+      },
+      "id": 4,
+      "interval": null,
+      "links": [],
+      "mappingType": 1,
+      "mappingTypes": [
+        {
+          "name": "value to text",
+          "value": 1
+        },
+        {
+          "name": "range to text",
+          "value": 2
+        }
+      ],
+      "maxDataPoints": 100,
+      "nullPointMode": "connected",
+      "nullText": null,
+      "options": {},
+      "postfix": "",
+      "postfixFontSize": "50%",
+      "prefix": "",
+      "prefixFontSize": "50%",
+      "rangeMaps": [
+        {
+          "from": "null",
+          "text": "N/A",
+          "to": "null"
+        }
+      ],
+      "sparkline": {
+        "fillColor": "rgba(31, 118, 189, 0.18)",
+        "full": false,
+        "lineColor": "rgb(31, 120, 193)",
+        "show": false,
+        "ymax": null,
+        "ymin": null
+      },
+      "tableColumn": "status",
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT COUNT(*) AS status, now() AS ctime\nFROM gpstate\nWHERE \"output\" LIKE '%All segments are running normally';",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "status"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpstate",
+          "timeColumn": "null",
+          "timeColumnType": "timestamp",
+          "where": []
+        }
+      ],
+      "thresholds": ",1",
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Database State",
+      "type": "singlestat",
+      "valueFontSize": "50%",
+      "valueMaps": [
+        {
+          "op": "=",
+          "text": "Normal",
+          "value": "1"
+        },
+        {
+          "op": "=",
+          "text": "N/A",
+          "value": "0"
+        }
+      ],
+      "valueName": "current"
+    },
+    {
+      "cacheTimeout": null,
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 6,
+        "y": 0
+      },
+      "id": 9,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": null,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT segment_replication_mode AS \"Replication Mode\", \n    MAX(count) AS \"Count\"\nFROM (\n    SELECT --gpconf1.\"content\" AS segment_num,\n        --CASE WHEN gpconf1.dbid <> gpconf2.dbid THEN 'p' ELSE 'm' END AS segment_role,\n        gprm.datastatus AS segment_replication_mode,\n        COUNT(gprm.datastatus)\n    FROM pg_catalog.gp_segment_configuration gpconf1\n        INNER JOIN pg_catalog.gp_segment_configuration gpconf2\n            ON gpconf1.\"content\" = gpconf2.\"content\"\n        INNER JOIN gpstate_replication_mode gprm\n           ON gprm.datadir = gpconf2.datadir\n    WHERE gpconf2.\"content\" <> -1\n    GROUP BY 1\n    UNION \n    SELECT 'Synchronized', 0\n    UNION \n    SELECT 'Resynchronizing', 0\n    UNION \n    SELECT 'Change Tracking', 0\n    UNION\n    SELECT 'Not Syncing', 0) foo\nGROUP BY 1\nORDER BY 1;\n",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_user"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history_1_prt_2",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Replication Mode",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 12,
+        "y": 0
+      },
+      "id": 8,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": null,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT CASE WHEN \"role\" = preferred_role THEN 'Preferred' WHEN \"role\" != preferred_role THEN 'Not Preferred'  END AS \"Segment Role\", SUM(count) AS \"Count\"\nFROM (\n    SELECT \"role\", preferred_role, COUNT(*)\n    FROM pg_catalog.gp_segment_configuration\n    WHERE content <> -1\n    GROUP BY \"role\", preferred_role\n    UNION \n    SELECT 'p', 'p', 0\n    UNION \n    SELECT 'p', 'm', 0\n    UNION \n    SELECT 'm', 'm', 0\n    UNION \n    SELECT 'm', 'p', 0) foo\nGROUP BY \"Segment Role\"\nORDER BY \"Segment Role\" DESC;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_user"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history_1_prt_2",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "In Preferred Role",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 8,
+        "w": 6,
+        "x": 18,
+        "y": 0
+      },
+      "id": 6,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": null,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "",
+          "thresholds": [],
+          "type": "number",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT CASE status WHEN 'u' THEN 'Up' WHEN 'd' THEN 'Down' END AS \"Segment Status\", MAX(count) AS \"Count\"\nFROM (\n    SELECT status, COUNT(*)\n    FROM pg_catalog.gp_segment_configuration\n    WHERE content <> -1\n    GROUP BY status\n    UNION \n    SELECT 'd', 0\n    UNION \n    SELECT 'u', 0) foo\nGROUP BY status\nORDER BY status DESC;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_user"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history_1_prt_2",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Status",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "cacheTimeout": null,
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "90%",
+      "gridPos": {
+        "h": 26,
+        "w": 6,
+        "x": 0,
+        "y": 2
+      },
+      "id": 11,
+      "links": [],
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 0,
+        "desc": false
+      },
+      "styles": [],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT *\nFROM gpstate_summary",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_user"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Segment Summary",
+      "transform": "table",
+      "type": "table"
+    },
+    {
+      "columns": [],
+      "datasource": "greenplum-metrics",
+      "fontSize": "100%",
+      "gridPos": {
+        "h": 20,
+        "w": 18,
+        "x": 6,
+        "y": 8
+      },
+      "id": 2,
+      "options": {},
+      "pageSize": null,
+      "showHeader": true,
+      "sort": {
+        "col": 3,
+        "desc": false
+      },
+      "styles": [
+        {
+          "alias": "",
+          "colorMode": null,
+          "colors": [
+            "rgba(245, 54, 54, 0.9)",
+            "rgba(237, 129, 40, 0.89)",
+            "rgba(50, 172, 45, 0.97)"
+          ],
+          "dateFormat": "YYYY-MM-DD HH:mm:ss",
+          "decimals": 2,
+          "mappingType": 1,
+          "pattern": "Last Event",
+          "thresholds": [],
+          "type": "date",
+          "unit": "short"
+        }
+      ],
+      "targets": [
+        {
+          "format": "table",
+          "group": [],
+          "metricColumn": "none",
+          "rawQuery": true,
+          "rawSql": "SELECT gsc.hostname AS \"Host Name\", \n    gsc.address AS \"Address\", \n    gsc.port AS \"Port\", \n    gsc.dbid AS \"DBID\", \n    gsc.content AS \"Content\", \n    CASE gsc.status WHEN 'u' THEN 'Up' WHEN 'd' THEN 'Down' END AS \"Status\", \n    CASE gsc.\"role\" WHEN 'p' THEN 'Primary' WHEN 'm' THEN 'Mirror' END AS \"Role\", \n    CASE gsc.preferred_role WHEN 'p' THEN 'Primary' WHEN 'm' THEN 'Mirror' END AS \"Preferred Role\",\n    CASE gsc.\"mode\" WHEN 's' THEN 'Synced' WHEN 'n' THEN 'Not Synced' END AS \"Replication Mode\", \n    gch1.last_event AS \"Last Event\", \n    gch2.\"desc\" AS \"Last Event Description\", \n    gch1.event_total AS \"Total Events\"\nFROM pg_catalog.gp_segment_configuration gsc, (\n    SELECT dbid, MAX(\"time\") AS last_event, COUNT(dbid) AS event_total\n    FROM pg_catalog.gp_configuration_history gch\n    GROUP BY dbid ) gch1, (\n    SELECT dbid, \"time\", \"desc\"\n    FROM pg_catalog.gp_configuration_history) gch2\nWHERE gsc.dbid = gch1.dbid\n    AND gch1.dbid = gch2.dbid\n    AND gch1.last_event = gch2.\"time\"\n    AND gsc.content <> -1\nORDER BY status, content, \"role\" DESC, \"time\" DESC;",
+          "refId": "A",
+          "select": [
+            [
+              {
+                "params": [
+                  "cpu_user"
+                ],
+                "type": "column"
+              }
+            ]
+          ],
+          "table": "gpcc_system_history_1_prt_2",
+          "timeColumn": "ctime",
+          "timeColumnType": "timestamp",
+          "where": [
+            {
+              "name": "$__timeFilter",
+              "params": [],
+              "type": "macro"
+            }
+          ]
+        }
+      ],
+      "timeFrom": null,
+      "timeShift": null,
+      "title": "Segment Details",
+      "transform": "table",
+      "type": "table"
+    }
+  ],
+  "schemaVersion": 20,
+  "style": "dark",
+  "tags": [],
+  "templating": {
+    "list": []
+  },
+  "time": {
+    "from": "now-6h",
+    "to": "now"
+  },
+  "timepicker": {
+    "refresh_intervals": [
+      "5s",
+      "10s",
+      "30s",
+      "1m",
+      "5m",
+      "15m",
+      "30m",
+      "1h",
+      "2h",
+      "1d"
+    ]
+  },
+  "timezone": "",
+  "title": "Segment Status",
+  "uid": "LLQ5rn-Zk",
+  "version": 1
+}
